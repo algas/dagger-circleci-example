@@ -1,8 +1,17 @@
 version: 2.1
+orbs:
+  dagger: logicalhq/dagger@1.2
 jobs:
   build:
     docker:
       - image: cimg/node:17.9.0
     steps:
       - checkout
-      - run: echo "hello world"
+      - dagger/setup
+      - dagger/exec:
+          args: hello
+      - dagger/cleanup
+workflows:
+  project:
+    jobs:
+      - build
